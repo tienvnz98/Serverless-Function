@@ -1,0 +1,15 @@
+###
+### Template: https://github.com/github/gitignore/blob/master/Node.gitignore
+###
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+jspm_packages/
+package-look.json

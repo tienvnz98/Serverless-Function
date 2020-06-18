@@ -1,0 +1,22 @@
+{
+  "name": "serverless-function",
+  "version": "1.0.0",
+  "description": "Fast to deploy a simple REST API service.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tienvnz98/Serverless-Function.git"
+  },
+  "keywords": [
+    "serverless"
+  ],
+  "author": "tiennm",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tienvnz98/Serverless-Function/issues"
+  },
+  "homepage": "https://github.com/tienvnz98/Serverless-Function#readme"
+}
