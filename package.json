@@ -4,6 +4,7 @@
   "description": "Fast to deploy a simple REST API service.",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/tienvnz98/Serverless-Function/issues"
   },
-  "homepage": "https://github.com/tienvnz98/Serverless-Function#readme"
+  "homepage": "https://github.com/tienvnz98/Serverless-Function#readme",
+  "dependencies": {
+    "directory-tree": "^2.2.4",
+    "express": "^4.17.1"
+  }
 }
