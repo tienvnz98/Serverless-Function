@@ -27,13 +27,18 @@ module.exports.execLiveCommand = (commandList = []) => {
   for (const item of commandList) {
     command = !command ? item : (command + ' && ' + item);
   }
+
   if (command) {
     console.log(command);
     const coffeeProcess = exec(command);
     coffeeProcess.stdout.on('data', function (data) {
       console.log(data);
     });
+
+    return coffeeProcess;
   } else {
     console.error("Command is empty!");
   }
+  
+  return null;
 }
