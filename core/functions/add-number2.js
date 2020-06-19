@@ -1,1 +1,0 @@
-module.exports = (ctx) => { const a = ctx.request.body.a; const b = ctx.request.body.b; const c = a+b; return ctx.showResult(ctx,c,200); }
