@@ -1,7 +1,6 @@
 const fs = require('fs');
-const { restartChildProcess } = require('../libs/process-control');
+const { killChildProcess } = require('../libs/process-control');
 const dirTree = require('directory-tree');
-const { resolve } = require('path');
 
 module.exports = async (ctx) => {
   const dir = dirTree('./core/functions');
@@ -36,15 +35,11 @@ module.exports = async (ctx) => {
       }
 
       await fs.writeFileSync(`./core/functions/${name}.js`, script);
+      killChildProcess();
 
-      restartChildProcess();
       return ctx.showResult(ctx, 'Update success!', 200);
     }
 
     return ctx.showError(ctx, `Not found function ${name}`, 404);
   }
-
-  await fs.writeFileSync(`./core/functions/${name}.js`, script);
-  restartChildProcess();
-  return ctx.showResult(ctx, 'Created!', 201);
 }

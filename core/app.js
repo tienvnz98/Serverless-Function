@@ -5,7 +5,7 @@ const app = new Koa();
 const router = require('./router');
 const middleFunction = require('./middlewares/middle-function');
 const errorHandler = require('./middlewares/error-handler');
-const apiPort = process.env.API_PORT || 3200;
+const apiPort = process.env.API_PORT || 4200;
 const webSocket = require('./websocket');
 
 (async () => {

@@ -6,7 +6,7 @@ const WebSocket = require('websocket').server;
 const { startChildProcess } = require('./libs/process-control');
 
 const router = require('./admin-controllers');
-const adminPort = process.env.ADMIN_PORT || 3100;
+const adminPort = process.env.ADMIN_PORT || 4100;
 const errorHandler = require('./middlewares/error-handler');
 const middleFunction = require('./middlewares/middle-function');
 const { childProcess } = require('./libs/event-emitor');
@@ -30,7 +30,7 @@ async function startApp() {
 
   childProcess.init(wsServer);
 
-  //  startChildProcess();
+  startChildProcess();
 }
 
 startApp();

@@ -10,9 +10,3 @@ module.exports.killChildProcess = async () => {
 module.exports.startChildProcess = function start() {
   execLiveCommand(['cd ./core', 'node app.js']);
 };
-
-module.exports.restartChildProcess = function () {
-  childProcess.killProcess();
-  console.log('Send kill process done!');
-  execLiveCommand(['cd ./core', 'node app.js']);
-}

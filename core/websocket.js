@@ -9,7 +9,7 @@ module.exports = async () => {
       resolve(null);
     }, 5000);
 
-    ws.connect(`ws://127.0.0.1:${process.env.ADMIN_PORT || 3100}`);
+    ws.connect(`ws://127.0.0.1:${process.env.ADMIN_PORT || 4100}`);
     ws.on('connect', (connection) => {
       clearTimeout(timeout);
       resolve(connection);

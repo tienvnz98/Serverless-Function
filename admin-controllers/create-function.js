@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { restartChildProcess } = require('../libs/process-control');
+const { killChildProcess } = require('../libs/process-control');
 const dirTree = require('directory-tree');
 
 module.exports = async (ctx) => {
@@ -19,7 +19,7 @@ module.exports = async (ctx) => {
 
   await fs.writeFileSync(`./core/functions/${name}.js`, script);
   
-  restartChildProcess();
+  killChildProcess();
 
   return ctx.showResult(ctx, 'Created!', 201);
 }

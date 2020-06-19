@@ -13,7 +13,7 @@
             ],
             "program": "${workspaceFolder}/app.js",
             "env": {
-                "ADMIN_PORT": "3100",
+                "ADMIN_PORT": "4100",
                 "API_PORT": "3600"
             }
         }
