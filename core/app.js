@@ -6,28 +6,11 @@ const router = require('./router');
 const middleFunction = require('./middlewares/middle-function');
 const errorHandler = require('./middlewares/error-handler');
 const apiPort = process.env.API_PORT || 3200;
-const { client } = require('websocket');
+const webSocket = require('./websocket');
 
-start();
-async function start() {
-  const wsClient = await new Promise((resolve, reject) => {
-    const ws = new client();
-    setTimeout(() => {
-      reject(null);
-    }, 5000);
-
-    ws.connect(`ws://127.0.0.1:${process.env.ADMIN_PORT || 3100}`);
-    ws.on('connect', () => {
-      resolve(ws);
-    });
-  });
-
-  if (wsClient) {
-    wsClient.on('message', (data) => {
-      console.log(data);
-    })
-  }
-
+(async () => {
+  await webSocket();
+  
   app
     .use(cors())
     .use(bodyParser())
@@ -39,4 +22,4 @@ async function start() {
     console.log(`API runing on port ${apiPort}. Process ID: ${process.pid}`);
   });
 
-}
+})()

@@ -30,15 +30,21 @@ module.exports.execLiveCommand = (commandList = []) => {
 
   if (command) {
     console.log(command);
+
     const coffeeProcess = exec(command);
+
     coffeeProcess.stdout.on('data', function (data) {
-      console.log(data);
+      console.log('Child Process Data: ', data);
+    });
+
+    coffeeProcess.stdout.on('error', (err) => {
+      console.log('Child Process Error:', err);
     });
 
     return coffeeProcess;
   } else {
     console.error("Command is empty!");
   }
-  
+
   return null;
 }

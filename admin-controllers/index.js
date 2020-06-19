@@ -1,13 +1,13 @@
 const Router = require('koa-router');
 const router = new Router();
-const { killChildProcess } = require('./process-control');
+const { killChildProcess } = require('../libs/process-control');
 const createFunction = require('./create-function');
 
 router.get('/admin/home', async (ctx) => {
     ctx.body = 'Serverless admin API runing.';
 });
 
-router.get('/admin/chil_process/kill', async (ctx) => {
+router.delete('/admin/chil_process/kill', async (ctx) => {
     killChildProcess();
     ctx.body = 'Child process is dead!';
 });

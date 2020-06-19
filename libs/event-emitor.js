@@ -1,7 +1,7 @@
 class ChildProcess {
   constructor() {
     this._initialized = false;
-    this._ws = {};
+    this._ws = [];
   }
 
   async init(wsServer) {
@@ -9,6 +9,17 @@ class ChildProcess {
     // Already initialized
     if (this._initialized === true) return;
     this._initialized = true;
+
+    wsServer.on('connect', (connection) => {
+      this._ws.push(connection);
+      connection.sendUTF('accecpt');
+    });
+  }
+
+  killProcess() {
+    for (const connection of this._ws) {
+      connection.sendUTF('kill_process');
+    }
   }
 
   static get Instance() {
@@ -16,4 +27,4 @@ class ChildProcess {
   }
 }
 
-module.exports = ChildProcess.Instance;
+module.exports.childProcess = ChildProcess.Instance;
