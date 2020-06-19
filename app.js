@@ -30,7 +30,7 @@ async function startApp() {
 
   childProcess.init(wsServer);
 
-  startChildProcess();
+  //  startChildProcess();
 }
 
 startApp();

@@ -13,7 +13,13 @@ class ChildProcess {
     wsServer.on('connect', (connection) => {
       this._ws.push(connection);
       connection.sendUTF('accecpt');
+      connection.on('close', () => {
+        console.log('Child process disconected!');
+        const { startChildProcess } = require('./process-control');
+        startChildProcess();
+      })
     });
+
   }
 
   killProcess() {
