@@ -2,6 +2,7 @@ const Router = require('koa-router');
 const router = new Router();
 const { killChildProcess } = require('../libs/process-control');
 const createFunction = require('./create-function');
+const updateFunction = require('./update-function');
 
 router.get('/admin/home', async (ctx) => {
     ctx.body = 'Serverless admin API runing.';
@@ -17,9 +18,6 @@ router.post('/admin/chil_process/start', async (ctx) => {
 });
 
 router.post('/admin/function/create', createFunction);
-
-router.post('/admin/function/update', async (ctx) => {
-    ctx.body = 'Update function';
-});
+router.post('/admin/function/update', updateFunction);
 
 module.exports = router;

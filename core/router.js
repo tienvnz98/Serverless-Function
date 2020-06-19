@@ -3,7 +3,6 @@ const callback = require('./callback');
 const router = new Router();
 const handler = async (ctx) => {
     let functionName = ctx.params.functionName || 'not-found';
-    console.log(callback);
     if (!callback[functionName]) {
         functionName = 'not-found';
     }
@@ -21,7 +20,6 @@ router.put('/api/function_invocations/:functionName', handler);
 router.delete('/api/function_invocations/:functionName', handler);
 
 router.get('/process/kill', () => {
-    console.log("TEST");
     console.log(`child process id: ${process.pid} is dead!`);
     process.exit(0);
 });
