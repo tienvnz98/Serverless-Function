@@ -1,8 +1,5 @@
 FROM node:carbon-alpine
 
-WORKDIR /
-
-
 COPY package*.json ./
 
 RUN apk add --update python make alpine-sdk && \
@@ -23,3 +20,4 @@ EXPOSE 4100
 EXPOSE 4200
 
 CMD [ "npm", "start" ]
+

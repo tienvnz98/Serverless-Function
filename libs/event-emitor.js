@@ -1,5 +1,5 @@
 'use strict';
-
+let retry = 0;
 
 class ChildProcess {
   constructor() {
@@ -16,10 +16,16 @@ class ChildProcess {
     wsServer.on('connect', (connection) => {
       this._ws.push(connection);
       connection.sendUTF('accecpt');
+
       connection.on('close', () => {
         console.log('Child process disconected!');
-        const { startChildProcess } = require('./process-control');
-        startChildProcess();
+        if (retry < 5) {
+          const { startChildProcess } = require('./process-control');
+          startChildProcess();
+          retry++;
+        } else {
+          console.log(`Can't connect to child process!`);
+        }
       })
     });
 
