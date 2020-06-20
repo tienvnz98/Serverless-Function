@@ -1,3 +1,6 @@
+'use strict';
+
+
 const { client } = require('websocket');
 
 module.exports = async () => {

@@ -1,3 +1,6 @@
+'use strict';
+
+
 const dirTree = require('directory-tree');
 const notFound = require('./not-found');
 

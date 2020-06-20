@@ -1,3 +1,6 @@
+'use strict';
+
+
 const { exec } = require('child_process');
 const dirTree = require('directory-tree');
 const fs = require('fs');

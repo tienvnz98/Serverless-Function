@@ -1,6 +1,5 @@
 const fs = require('fs');
 const dirTree = require('directory-tree');
-const { resolve } = require('path');
 
 module.exports.tree = async (ctx) => {
   const tree = dirTree('./core/functions');

@@ -1,3 +1,6 @@
+'use strict';
+
+
 const { exec } = require('child_process');
 
 module.exports.execCommand = async (commandList = []) => {

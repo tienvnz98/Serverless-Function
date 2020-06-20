@@ -1,3 +1,6 @@
+'use strict';
+
+
 const http = require('../libs/http-request');
 
 module.exports = () => {

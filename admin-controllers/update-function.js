@@ -1,3 +1,6 @@
+'use strict';
+
+
 const fs = require('fs');
 const { killChildProcess } = require('../libs/process-control');
 const dirTree = require('directory-tree');

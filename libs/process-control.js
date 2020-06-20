@@ -1,5 +1,4 @@
-const httpRequest = require('./http-request');
-const { execLiveCommand, execCommand } = require('./command');
+const { execLiveCommand } = require('./command');
 const { childProcess } = require('./event-emitor');
 const { installAnyPackage, scanPackage } = require('./package-manager');
 

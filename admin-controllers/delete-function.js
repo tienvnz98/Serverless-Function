@@ -1,7 +1,7 @@
-const fs = require('fs');
-const dirTree = require('directory-tree');
-const { resolve } = require('path');
+'use strict';
 
+
+const fs = require('fs');
 
 module.exports = async (ctx) => {
   try {

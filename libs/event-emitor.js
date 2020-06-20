@@ -1,3 +1,6 @@
+'use strict';
+
+
 class ChildProcess {
   constructor() {
     this._initialized = false;

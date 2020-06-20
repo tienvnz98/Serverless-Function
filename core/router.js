@@ -1,3 +1,6 @@
+'use strict';
+
+
 const Router = require('koa-router');
 const callback = require('./callback');
 const router = new Router();
