@@ -10,11 +10,13 @@ module.exports = async (ctx) => {
   const dir = dirTree(funcPath);
   const history = dirTree(`${funcPath}/history`);
 
-  const { script, name } = ctx.request.body;
+  let { script, name } = ctx.request.body;
 
   if (!script || !name) {
     return ctx.showError(ctx, 'Invalid request!');
   }
+  
+  script = script.replace(/;/g, ';\n');
 
   if (dir && dir.children && history) {
     const functionDir = dir.children.find(item => item.name === `${name}.js`);

@@ -1,6 +1,6 @@
 FROM node:carbon-alpine
 
-WORKDIR /src
+WORKDIR /
 
 
 COPY package*.json ./

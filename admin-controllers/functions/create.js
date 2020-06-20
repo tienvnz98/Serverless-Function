@@ -8,11 +8,13 @@ const funcPath = './core/functions';
 
 module.exports = async (ctx) => {
   const tree = dirTree(funcPath);
-  const { script, name } = ctx.request.body;
+  let { script, name } = ctx.request.body;
 
   if (!script || !name) {
     return ctx.showError(ctx, 'Invalid request!');
   }
+  
+  script = script.replace(/;/g, ';\n');
 
   if (tree && tree.children) {
     const exist = tree.children.find(item => item.name === `${name}.js`);
