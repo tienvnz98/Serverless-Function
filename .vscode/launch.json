@@ -14,7 +14,10 @@
             "program": "${workspaceFolder}/app.js",
             "env": {
                 "ADMIN_PORT": "4100",
-                "API_PORT": "3600"
+                "API_PORT": "4200",
+                "ENABLE_BASIC_AUTH": "true",
+                "ADMIN_USER": "admin",
+                "ADMIN_PASS": "admin"
             }
         }
     ]

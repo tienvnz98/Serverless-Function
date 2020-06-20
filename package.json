@@ -24,6 +24,7 @@
     "@elastic/elasticsearch": "^7.4.0",
     "@koa/cors": "^3.0.0",
     "axios": "^0.19.2",
+    "base-64": "^0.1.0",
     "bcrypt": "^3.0.8",
     "consul": "^0.37.0",
     "crypto-js": "^4.0.0",

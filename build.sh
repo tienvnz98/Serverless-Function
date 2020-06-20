@@ -1,0 +1,1 @@
+docker build -t 'tiennm/serverless-function-node:0.1' . 
