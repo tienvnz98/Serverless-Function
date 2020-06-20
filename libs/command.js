@@ -32,13 +32,23 @@ module.exports.execLiveCommand = (commandList = []) => {
   }
 
   if (command) {
-    console.log(command);
     const childProcess = exec(command);
+
     childProcess.stdout.on('data', function (data) {
-      console.log('Child Process Data: ', data);
+      if (data) data = data.replace(/\n/g, '');
+      console.log('\x1b[44m%s\x1b[0m', 'Child Process Data:', data);
     });
+
     childProcess.stdout.on('error', (err) => {
-      console.log('Child Process Error:', err);
+      console.log('\x1b[44m%s\x1b[0m', 'Child Process Error:', err);
+    });
+
+    childProcess.stdout.on('exit', (code) => {
+      console.log('\x1b[41m%s\x1b[0m', `Child Process Exit: Child Process: Child process exit with code ${code}`);
+    });
+
+    childProcess.stdout.on('message', (mgs) => {
+      console.log('Child Process Message: ', mgs);
     });
 
     return childProcess;
