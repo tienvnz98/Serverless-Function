@@ -14,7 +14,7 @@ const moduleDetect = (context) => {
   return listModule;
 };
 const installPackage = async (pkgName) => {
-  
+
   console.log(`Process install package ${pkgName}.`);
 
   const exist = await new Promise((resolve) => {
@@ -79,8 +79,9 @@ const scanPackage = async (path) => {
     for (const item of tree.children) {
       if (item.extension === '.js') {
         const content = await fs.readFileSync(item.path, 'utf8');
-        const listModule = moduleDetect(content);
-        packages.push(...listModule);
+        (moduleDetect(content) || []).forEach(moduleName => {
+          if (packages.indexOf(moduleName) === -1) packages.push(moduleName);
+        });;
       }
     }
   }
