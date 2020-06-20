@@ -2,12 +2,13 @@
 
 
 const fs = require('fs');
-const { killChildProcess } = require('../libs/process-control');
+const { killChildProcess } = require('../../libs/process-control');
 const dirTree = require('directory-tree');
+const funcPath = './core/functions';
 
 module.exports = async (ctx) => {
-  const dir = dirTree('./core/functions');
-  const history = dirTree('./core/functions/history');
+  const dir = dirTree(funcPath);
+  const history = dirTree(`${funcPath}/history`);
 
   const { script, name } = ctx.request.body;
 
@@ -21,7 +22,7 @@ module.exports = async (ctx) => {
 
     if (!historyDir) {
       await new Promise((resolve, reject) => {
-        fs.mkdir(`./core/functions/history/${name}`, (err) => {
+        fs.mkdir(`${funcPath}/history/${name}`, (err) => {
           if (err) reject(err);
           resolve(true);
         })
@@ -30,14 +31,14 @@ module.exports = async (ctx) => {
 
     if (functionDir) {
       // backup old script
-      const oldScript = await fs.readFileSync(`./core/functions/${name}.js`, 'utf8');
+      const oldScript = await fs.readFileSync(`${funcPath}/${name}.js`, 'utf8');
 
       if (oldScript.trim() !== script.trim()) {
-        await fs.writeFileSync(`./core/functions/history/${name}/${new Date().getTime()}.js`, oldScript);
+        await fs.writeFileSync(`${funcPath}/history/${name}/${new Date().getTime()}.js`, oldScript);
 
       }
 
-      await fs.writeFileSync(`./core/functions/${name}.js`, script);
+      await fs.writeFileSync(`${funcPath}/${name}.js`, script);
       killChildProcess();
 
       return ctx.showResult(ctx, 'Update success!', 200);

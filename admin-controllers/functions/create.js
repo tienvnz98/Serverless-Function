@@ -2,11 +2,12 @@
 
 
 const fs = require('fs');
-const { killChildProcess } = require('../libs/process-control');
+const { killChildProcess } = require('../../libs/process-control');
 const dirTree = require('directory-tree');
+const funcPath = './core/functions';
 
 module.exports = async (ctx) => {
-  const tree = dirTree('./core/functions');
+  const tree = dirTree(funcPath);
   const { script, name } = ctx.request.body;
 
   if (!script || !name) {
@@ -21,7 +22,7 @@ module.exports = async (ctx) => {
     }
   }
 
-  await fs.writeFileSync(`./core/functions/${name}.js`, script);
+  await fs.writeFileSync(`${funcPath}/${name}.js`, script);
 
   killChildProcess();
 

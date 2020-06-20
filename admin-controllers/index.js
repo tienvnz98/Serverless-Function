@@ -3,10 +3,10 @@
 
 const Router = require('koa-router');
 const router = new Router();
-const createFunction = require('./create-function');
-const updateFunction = require('./update-function');
-const readFunction = require('./read-function');
-const deleteFunction = require('./delete-function');
+const createFunction = require('./functions/create');
+const updateFunction = require('./functions/update');
+const readFunction = require('./functions/read');
+const deleteFunction = require('./functions/delete');
 
 router.get('/admin/home', async (ctx) => {
     ctx.body = 'Serverless admin API runing.';
