@@ -12,8 +12,6 @@ const handler = async (ctx) => {
     return callback[functionName](ctx);
 };
 
-
-
 router.get('/api/function_invocations/home', async (ctx) => {
     ctx.body = 'Serverless function homepage!';
 });
