@@ -11,5 +11,6 @@ yarn-error.log*
 
 # Dependency directories
 node_modules/
+core/functions/
 jspm_packages/
-package-look.json
+package-look.*

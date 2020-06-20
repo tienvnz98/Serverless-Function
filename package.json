@@ -1,9 +1,10 @@
 {
   "name": "serverless-function",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Fast to deploy a simple REST API service.",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,5 +19,30 @@
   "bugs": {
     "url": "https://github.com/tienvnz98/Serverless-Function/issues"
   },
-  "homepage": "https://github.com/tienvnz98/Serverless-Function#readme"
+  "homepage": "https://github.com/tienvnz98/Serverless-Function#readme",
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.4.0",
+    "@koa/cors": "^3.0.0",
+    "axios": "^0.19.2",
+    "base-64": "^0.1.0",
+    "bcrypt": "^3.0.8",
+    "consul": "^0.37.0",
+    "cron": "^1.8.2",
+    "crypto-js": "^4.0.0",
+    "csv": "^5.3.2",
+    "directory-tree": "^2.2.4",
+    "express-ws": "^4.0.0",
+    "json2csv": "^4.5.3",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.12.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.31",
+    "node-fetch": "^2.6.0",
+    "ping": "^0.2.3",
+    "websocket": "^1.0.31",
+    "ws": "^7.3.0"
+  }
 }
