@@ -5,13 +5,16 @@ class ChildProcess {
   constructor() {
     this._initialized = false;
     this._ws = [];
+    this._wsServer = null;
   }
 
   async init(wsServer) {
-    const that = this;
     // Already initialized
     if (this._initialized === true) return;
     this._initialized = true;
+
+    const that = this;
+    this._wsServer = wsServer;
 
     wsServer.on('connect', (connection) => {
       this._ws.push(connection);
@@ -35,6 +38,10 @@ class ChildProcess {
     for (const connection of this._ws) {
       connection.sendUTF('kill_process');
     }
+  }
+
+  getConnection() {
+    return this._wsServer;
   }
 
   static get Instance() {

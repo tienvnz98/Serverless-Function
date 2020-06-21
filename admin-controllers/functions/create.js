@@ -2,9 +2,9 @@
 
 
 const fs = require('fs');
-const { killChildProcess } = require('../../libs/process-control');
 const dirTree = require('directory-tree');
 const funcPath = './core/functions';
+const { deployChildProcess } = require('../deploy');
 
 module.exports = async (ctx) => {
   const tree = dirTree(funcPath);
@@ -13,7 +13,7 @@ module.exports = async (ctx) => {
   if (!script || !name) {
     return ctx.showError(ctx, 'Invalid request!');
   }
-  
+
   script = script.replace(/;/g, ';\n');
 
   if (tree && tree.children) {
@@ -26,7 +26,10 @@ module.exports = async (ctx) => {
 
   await fs.writeFileSync(`${funcPath}/${name}.js`, script);
 
-  killChildProcess();
+  if (process.env.FAST_DEPLOY === 'true') {
+    const result = await deployChildProcess();
+    return result.success ? ctx.showResult(ctx, result.message, 200) : ctx.showError(ctx, result.message, 400);
+  }
 
   return ctx.showResult(ctx, 'Created!', 201);
 }

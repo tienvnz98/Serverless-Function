@@ -2,9 +2,9 @@
 
 
 const fs = require('fs');
-const { killChildProcess } = require('../../libs/process-control');
 const dirTree = require('directory-tree');
 const funcPath = './core/functions';
+const { deployChildProcess } = require('../deploy');
 
 module.exports = async (ctx) => {
   const dir = dirTree(funcPath);
@@ -41,11 +41,15 @@ module.exports = async (ctx) => {
       }
 
       await fs.writeFileSync(`${funcPath}/${name}.js`, script);
-      killChildProcess();
 
       return ctx.showResult(ctx, 'Update success!', 200);
     }
 
+    if (process.env.FAST_DEPLOY === 'true') {
+      const result = await deployChildProcess();
+      return result.success ? ctx.showResult(ctx, result.message, 200) : ctx.showError(ctx, result.message, 400);
+    }
+    
     return ctx.showError(ctx, `Not found function ${name}`, 404);
   }
 }

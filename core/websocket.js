@@ -9,9 +9,10 @@ module.exports = async () => {
     const timeout = setTimeout(() => {
       console.log("Can not connect to manager!");
       resolve(null);
-    }, 5000);
+      process.exit(1);
+    }, 10000);
     const wsUrl = `ws://127.0.0.1:${process.env.ADMIN_PORT || 4100}`;
-    
+
     ws.connect(wsUrl);
     ws.on('connect', (connection) => {
       clearTimeout(timeout);
@@ -26,10 +27,10 @@ module.exports = async () => {
         process.exit(1);
       }
     });
-
     wsClient.on('close', (data) => {
       console.log("Disconnect from server!");
     });
+    wsClient.sendUTF('connected');
   } else {
     process.exit(1);
   }

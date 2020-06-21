@@ -15,6 +15,8 @@ const middleFunction = require('./middlewares/middle-function');
 const basicAuth = require('./middlewares/basic-auth');
 const { childProcess } = require('./libs/event-emitor');
 
+const http = require('./libs/http-request');
+
 async function startApp() {
   app
     .use(cors())

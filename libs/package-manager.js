@@ -15,7 +15,7 @@ const moduleDetect = (context) => {
 };
 const installPackage = async (pkgName) => {
 
-  console.log(`Process install package ${pkgName}.`);
+
 
   const exist = await new Promise((resolve) => {
     try {
@@ -27,7 +27,7 @@ const installPackage = async (pkgName) => {
   });
 
   if (exist) {
-    console.log(`${pkgName} already exist!`);
+
     return true;
   }
 
@@ -36,6 +36,7 @@ const installPackage = async (pkgName) => {
       console.log('Install package timeout after 30s.');
       reject('Install package timeout after 30s.');
     }, 30000);
+    console.log(`Process install package ${pkgName}.`);
 
     exec(`npm install --save ${pkgName}`, (err, stdout, stderr) => {
       clearTimeout(timeout);

@@ -3,9 +3,10 @@ IMAGE_NAME="serverless-function"
 
 # Building
 echo 'Building '${IMAGE_NAME}' version '$VERSION'...'
-docker build -t $DOCKER_HUB_ACCOUNT/$IMAGE_NAME:$VERSION .
+docker build -t $DOCKER_HUB_ACCOUNT/$IMAGE_NAME:latest -t $DOCKER_HUB_ACCOUNT/$IMAGE_NAME:$VERSION .
 
-Deploy
+# Deploy
 echo 'Deploying '$DOCKER_HUB_ACCOUNT/$IMAGE_NAME' version '$VERSION'...'
 docker login --username=$DOCKER_HUB_ACCOUNT --password=$DOCKER_HUB_PASSWORD
 docker push $DOCKER_HUB_ACCOUNT/$IMAGE_NAME:$VERSION
+docker push $DOCKER_HUB_ACCOUNT/$IMAGE_NAME:latest
