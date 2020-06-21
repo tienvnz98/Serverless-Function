@@ -2,7 +2,6 @@
 
 
 const fs = require('fs');
-const { killChildProcess } = require('../../libs/process-control');
 const dirTree = require('directory-tree');
 const funcPath = './core/middlewares';
 
@@ -37,12 +36,9 @@ module.exports = async (ctx) => {
 
       if (oldScript.trim() !== script.trim()) {
         await fs.writeFileSync(`${funcPath}/history/${name}/${new Date().getTime()}.js`, oldScript);
-
       }
 
       await fs.writeFileSync(`${funcPath}/${name}.js`, script);
-      killChildProcess();
-
       return ctx.showResult(ctx, 'Update success!', 200);
     }
 

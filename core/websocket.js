@@ -27,10 +27,10 @@ module.exports = async () => {
         process.exit(1);
       }
     });
-
     wsClient.on('close', (data) => {
       console.log("Disconnect from server!");
     });
+    wsClient.sendUTF('connected');
   } else {
     process.exit(1);
   }

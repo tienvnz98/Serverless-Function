@@ -2,7 +2,6 @@
 
 
 const fs = require('fs');
-const { killChildProcess } = require('../../libs/process-control');
 const dirTree = require('directory-tree');
 const funcPath = './core/functions';
 
@@ -41,7 +40,6 @@ module.exports = async (ctx) => {
       }
 
       await fs.writeFileSync(`${funcPath}/${name}.js`, script);
-      killChildProcess();
 
       return ctx.showResult(ctx, 'Update success!', 200);
     }

@@ -2,7 +2,6 @@
 
 
 const fs = require('fs');
-const { killChildProcess } = require('../../libs/process-control');
 
 module.exports = async (ctx) => {
   try {
@@ -16,8 +15,6 @@ module.exports = async (ctx) => {
         }
       })
     });
-    
-    killChildProcess();
 
     return ctx.showResult(ctx, res, 200);
   } catch (error) {
