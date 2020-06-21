@@ -99,17 +99,17 @@ package installation time.</td>
 - The path prefix admin API is /admin/
 
 #### Functions
-- [Create function](./docs/functions/create.md)
+- [Create new function](./docs/functions/create.md)
 - [Read function](./docs/functions/read.md)
-- [Update new function](./docs/functions/update.md)
-- [Delete new function](./docs/functions/delete.md)
+- [Update function](./docs/functions/update.md)
+- [Delete function](./docs/functions/delete.md)
 
 #### Middlewares
 
-- [Create function](./docs/middlewares/create.md)
+- [Create new function](./docs/middlewares/create.md)
 - [Read function](./docs/middlewares/read.md)
-- [Update new function](./docs/middlewares/update.md)
-- [Delete new function](./docs/middlewares/delete.md)
+- [Update function](./docs/middlewares/update.md)
+- [Delete function](./docs/middlewares/delete.md)
 
 #### Deploy action
 <blockquote>
