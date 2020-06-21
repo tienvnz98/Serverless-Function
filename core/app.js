@@ -12,6 +12,7 @@ const webSocket = require('./websocket');
 
 (async () => {
   await webSocket();
+  
   app.use(cors());
   app.use(bodyParser());
 
