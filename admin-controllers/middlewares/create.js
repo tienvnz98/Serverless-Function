@@ -4,6 +4,7 @@
 const fs = require('fs');
 const dirTree = require('directory-tree');
 const funcPath = './core/middlewares';
+const { deployChildProcess } = require('../deploy');
 
 module.exports = async (ctx) => {
   const tree = dirTree(funcPath);
@@ -25,5 +26,10 @@ module.exports = async (ctx) => {
 
   await fs.writeFileSync(`${funcPath}/${name}.js`, script);
 
+  if (process.env.FAST_DEPLOY === 'true') {
+    const result = await deployChildProcess();
+    return result.success ? ctx.showResult(ctx, result.message, 200) : ctx.showError(ctx, result.message, 400);
+  }
+  
   return ctx.showResult(ctx, 'Created!', 201);
 }

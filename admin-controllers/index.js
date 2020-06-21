@@ -30,6 +30,6 @@ router.delete('/admin/middleware/delete', deleteMiddleware);
 router.post('/admin/middleware/create', createMiddleware);
 router.post('/admin/middleware/update', updateMiddleware);
 
-router.get('/admin/process/deploy', deploy);
+router.get('/admin/process/deploy', deploy.deploy);
 
 module.exports = router;

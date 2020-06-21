@@ -3,13 +3,11 @@
 const { childProcess } = require('../libs/event-emitor');
 const { killChildProcess } = require('../libs/process-control');
 
-module.exports = async (ctx) => {
-  killChildProcess();
-
+async function deployChildProcess() {
   const wsServer = childProcess.getConnection();
-  const deployTimeOut = process.env.DEPLOY_TIMEOUT || 60;
   const result = await new Promise((resolve, reject) => {
-
+    killChildProcess();
+    const deployTimeOut = process.env.DEPLOY_TIMEOUT || 60;
     const timeout = setTimeout(() => {
       const mgs = `Deploy timeout after ${deployTimeOut} seconds.`;
       console.log(mgs);
@@ -34,6 +32,12 @@ module.exports = async (ctx) => {
 
   });
 
+  return result;
+}
+
+module.exports.deployChildProcess = deployChildProcess;
+module.exports.deploy = async (ctx) => {
+  const result = await deployChildProcess();
   return result.success ?
     ctx.showResult(ctx, result.message, 200) :
     ctx.showError(ctx, result.message, 400);
