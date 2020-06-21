@@ -15,8 +15,10 @@ function callback() {
       if (item && item.name && item.extension === '.js') {
         const functionName = item.name.replace(item.extension, '');
         const func = require(`./functions/${functionName}`);
-        
-        callbackMap[functionName] = func;
+
+        if (func.handers && typeof (func.handers) === 'function') {
+          callbackMap[functionName] = func.handers;
+        }
       }
     }
   }
