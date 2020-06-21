@@ -87,3 +87,33 @@ package installation time.</td>
     <td>option</td>
   </tr>
 </table>
+
+
+## APIs Guide.
+
+### Admin APIs.
+- First, you can get health status Admin API on: `http://localhost:{ADMIN_PORT}/admin/home`
+
+- Make sure the admin service is active.
+
+- The path prefix admin API is /admin/
+
+#### Functions
+- [Create function](./docs/functions/create.md)
+- [Read function](./docs/functions/read.md)
+- [Update new function](./docs/functions/update.md)
+- [Delete new function](./docs/functions/delete.md)
+
+#### Middlewares
+
+- [Create function](./docs/middlewares/create.md)
+- [Read function](./docs/middlewares/read.md)
+- [Update new function](./docs/middlewares/update.md)
+- [Delete new function](./docs/middlewares/delete.md)
+
+#### Deploy action
+<blockquote>
+If you using option FAST_DEPLOY=false. You need to request action deploy after create, update, or delete function:
+
+<code> GET http://localhost:4100/admin/process/deploy</code>
+</blockquote>
