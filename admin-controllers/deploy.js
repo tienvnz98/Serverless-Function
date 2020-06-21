@@ -7,25 +7,34 @@ module.exports = async (ctx) => {
   killChildProcess();
 
   const wsServer = childProcess.getConnection();
-  const result = await new Promise(async (resolve, reject) => {
-    if (wsServer) {
-      const timeout = setTimeout(() => {
-        reject('Deploy timeout after 60 seconds!');
-      }, 1000);
+  const deployTimeOut = process.env.DEPLOY_TIMEOUT || 60;
+  const result = await new Promise((resolve, reject) => {
 
-      wsServer.on('connect', (connection) => {
-        connection.on('message', (data) => {
-          if (data && data.utf8Data === 'connected') {
-            clearTimeout(timeout);
-            resolve(true);
-          }
-        });
+    const timeout = setTimeout(() => {
+      const mgs = `Deploy timeout after ${deployTimeOut} seconds.`;
+      console.log(mgs);
+
+      resolve({
+        success: false,
+        message: mgs
       });
-    } else {
-      console.log('WS server admin error!');
-      reject('WS server admin error!');
-    }
+    }, deployTimeOut * 1000);
+
+    wsServer.on('connect', (connection) => {
+      connection.on('message', (data) => {
+        if (data && data.utf8Data === 'connected') {
+          clearTimeout(timeout);
+          resolve({
+            success: true,
+            message: 'Deploy success!'
+          });
+        }
+      });
+    });
+
   });
 
-  return ctx.showResult(ctx, result, 200);
+  return result.success ?
+    ctx.showResult(ctx, result.message, 200) :
+    ctx.showError(ctx, result.message, 400);
 }
