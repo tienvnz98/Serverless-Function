@@ -15,7 +15,7 @@ const deleteMiddleware = require('./middlewares/delete');
 const deploy = require('./deploy');
 
 router.get('/admin/home', async (ctx) => {
-    ctx.body = 'Serverless admin API runing.';
+    return ctx.showResult(ctx, 'Serverless function admin api homepage!', 200);
 });
 
 router.get('/admin/function/tree', readFunction.tree);

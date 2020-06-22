@@ -13,7 +13,7 @@ const handler = async (ctx) => {
 };
 
 router.get('/api/function_invocations/home', async (ctx) => {
-    ctx.body = 'Serverless function homepage!';
+    return ctx.showResult(ctx, 'Serverless function api homepage!', 200);
 });
 router.get('/api/function_invocations/:functionName', handler);
 router.post('/api/function_invocations/:functionName', handler);
