@@ -1,11 +1,21 @@
 # Create new function
 
 ## Request: 
-```js 
-POST: ${host}:${ADMIN_PORT}/admin/function/create
+```
+POST: :${ADMIN_PORT}/admin/function/create
 {
-    "name": "function_name",
-    "script":  "const moment = require('moment'); module.exports.handers = async(ctx)=>{ return ctx.showResult(ctx, moment(), 200); }"
+    "name": ${function_name},
+    "script": ${script_context} 
+}
+```
+### Script context
+```javascript
+const moment = require('moment');
+
+module.exports.handers = async(ctx)=>{
+    const today = moment();
+
+    return ctx.showResult(ctx,`${today}`, 200);
 }
 ```
 
