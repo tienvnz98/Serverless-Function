@@ -1,7 +1,7 @@
 'use strict';
 
 
-module.exports.handlers = async (ctx, next) => {
+module.exports.handers = async (ctx, next) => {
   try {
     await next();
   } catch (err) {

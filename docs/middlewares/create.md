@@ -5,7 +5,7 @@
 POST: ${host}:${ADMIN_PORT}/admin/middleware/create
 {
     "name": "middleware_name",
-    "script":  "module.exports.handlers = async(ctx,next)=>{ ctx.body = 'value'; };module.exports.order = 1;"
+    "script":  "module.exports.handers = async(ctx,next)=>{ ctx.body = 'value'; };module.exports.order = 1;"
 }
 ```
 

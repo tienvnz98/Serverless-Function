@@ -17,7 +17,7 @@ const webSocket = require('./websocket');
   app.use(bodyParser());
   
   for (const func of customMiddle) {
-    app.use(func.handlers);
+    app.use(func.handers);
   }
 
   app.use(router.routes());

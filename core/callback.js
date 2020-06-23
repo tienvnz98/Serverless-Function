@@ -16,8 +16,8 @@ function callback() {
         const functionName = item.name.replace(item.extension, '');
         const func = require(`./functions/${functionName}`);
 
-        if (func.handlers && typeof (func.handlers) === 'function') {
-          callbackMap[functionName] = func.handlers;
+        if (func.handers && typeof (func.handers) === 'function') {
+          callbackMap[functionName] = func.handers;
         }
       }
     }

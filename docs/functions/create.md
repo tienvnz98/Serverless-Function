@@ -12,7 +12,7 @@ POST: :${ADMIN_PORT}/admin/function/create
 ```javascript
 const moment = require('moment');
 
-module.exports.handlers = async(ctx)=>{
+module.exports.handers = async(ctx)=>{
     const today = moment();
 
     return ctx.showResult(ctx,`${today}`, 200);

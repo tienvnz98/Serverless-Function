@@ -13,7 +13,7 @@ function middlewares() {
         const functionName = item.name.replace(item.extension, '');
         const callback = require(`./middlewares/${functionName}`);
 
-        if (callback.handlers && (callback.order !== undefined)) {
+        if (callback.handers && (callback.order !== undefined)) {
           middlewares.push(callback);
         }
       }
