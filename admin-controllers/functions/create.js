@@ -22,7 +22,7 @@ module.exports = async (ctx) => {
     }
   }
 
-  await fs.writeFileSync(`${funcPath}/${name}.js`, script || `module.exports.handers = async(ctx)=>{return ctx.showResult(ctx,'API function: ${name}') };`);
+  await fs.writeFileSync(`${funcPath}/${name}.js`, script || `module.exports.handers = async(ctx)=>{return ctx.showResult(ctx,'API function: ${name}', 200) };`);
 
   if (process.env.FAST_DEPLOY === 'true') {
     const result = await deployChildProcess();
