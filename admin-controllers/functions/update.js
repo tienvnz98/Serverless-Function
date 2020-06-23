@@ -8,7 +8,12 @@ const { deployChildProcess } = require('../deploy');
 
 module.exports = async (ctx) => {
   const dir = dirTree(funcPath);
-  const history = dirTree(`${funcPath}/history`);
+  let history = dirTree(`${funcPath}/history`);
+
+  if (!history) {
+    fs.mkdirSync(`${funcPath}/history`);
+    history = dirTree(`${funcPath}/history`);
+  }
 
   let { script, name } = ctx.request.body;
 
