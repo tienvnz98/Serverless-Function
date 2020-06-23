@@ -1,6 +1,6 @@
 {
   "name": "serverless-function",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "Fast to deploy a simple REST API service.",
   "main": "app.js",
   "scripts": {
