@@ -10,11 +10,9 @@ module.exports = async (ctx) => {
   const tree = dirTree(funcPath);
   let { script, name } = ctx.request.body;
 
-  if (!script || !name) {
+  if (!name) {
     return ctx.showError(ctx, 'Invalid request!');
   }
-
-  script = script.replace(/;/g, ';\n');
 
   if (tree && tree.children) {
     const exist = tree.children.find(item => item.name === `${name}.js`);
@@ -24,7 +22,7 @@ module.exports = async (ctx) => {
     }
   }
 
-  await fs.writeFileSync(`${funcPath}/${name}.js`, script);
+  await fs.writeFileSync(`${funcPath}/${name}.js`, "");
 
   if (process.env.FAST_DEPLOY === 'true') {
     const result = await deployChildProcess();
