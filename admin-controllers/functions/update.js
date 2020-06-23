@@ -15,7 +15,7 @@ module.exports = async (ctx) => {
   if (!script || !name) {
     return ctx.showError(ctx, 'Invalid request!');
   }
-  
+
   script = script.replace(/;/g, ';\n');
 
   if (dir && dir.children && history) {
@@ -34,22 +34,22 @@ module.exports = async (ctx) => {
     if (functionDir) {
       // backup old script
       const oldScript = await fs.readFileSync(`${funcPath}/${name}.js`, 'utf8');
-
       if (oldScript.trim() !== script.trim()) {
         await fs.writeFileSync(`${funcPath}/history/${name}/${new Date().getTime()}.js`, oldScript);
 
       }
-
       await fs.writeFileSync(`${funcPath}/${name}.js`, script);
-
-      return ctx.showResult(ctx, 'Update success!', 200);
+    } else {
+      return ctx.showError(ctx, `Not found function ${name}`, 404);
     }
+
 
     if (process.env.FAST_DEPLOY === 'true') {
       const result = await deployChildProcess();
       return result.success ? ctx.showResult(ctx, result.message, 200) : ctx.showError(ctx, result.message, 400);
+
+    } else {
+      return ctx.showResult(ctx, 'Update success!', 200);
     }
-    
-    return ctx.showError(ctx, `Not found function ${name}`, 404);
   }
 }

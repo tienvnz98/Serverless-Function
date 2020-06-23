@@ -16,5 +16,5 @@ module.exports.startChildProcess = async function start() {
     return false;
   }
 
-  return execLiveCommand(['cd ./core', 'node app.js']);
+  return execLiveCommand(['cd core', 'node app.js']);
 };
