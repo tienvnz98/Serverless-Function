@@ -15,8 +15,9 @@
             "env": {
                 "ADMIN_PORT": "4100",
                 "API_PORT": "4200",
-                "ENABLE_BASIC_AUTH": "true",
+                "ENABLE_BASIC_AUTH": "false",
                 "ADMIN_USER": "admin",
+                "FAST_DEPLOY": "true",
                 "ADMIN_PASS": "admin"
             }
         }
