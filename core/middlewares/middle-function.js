@@ -1,7 +1,7 @@
 'use strict';
 
 
-module.exports.handers = async (ctx, next) => {
+module.exports.handlers = async (ctx, next) => {
   ctx.showResult = (ctx, data, status) => {
     ctx.status = status || 200;
     ctx.body = {

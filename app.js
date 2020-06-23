@@ -10,7 +10,7 @@ const { startChildProcess } = require('./libs/process-control');
 
 const router = require('./admin-controllers');
 const adminPort = process.env.ADMIN_PORT || 4100;
-const errorHandler = require('./middlewares/error-handler');
+const errorhandlers = require('./middlewares/error-handlers');
 const middleFunction = require('./middlewares/middle-function');
 const basicAuth = require('./middlewares/basic-auth');
 const { childProcess } = require('./libs/event-emitor');
@@ -23,7 +23,7 @@ async function startApp() {
     .use(middleFunction())
     .use(basicAuth())
     .use(bodyParser())
-    .use(errorHandler())
+    .use(errorhandlers())
     .use(router.routes());
 
   const server = app.listen(adminPort, () => {
