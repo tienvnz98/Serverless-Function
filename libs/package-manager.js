@@ -7,9 +7,16 @@ const fs = require('fs');
 
 const moduleDetect = (context) => {
   // only npm module
+  const lines = context.split(';');
   const regexp = /(require\(')([a-zA-Z])(.*)('\))/g;
-  let array = context.match(regexp) || [];
-  const listModule = array.map(item => item.replace(`require('`, '').replace(`')`, ''));
+  const listMatch = [];
+
+  for (const line of lines) {
+    let array = line.match(regexp) || [];
+    listMatch.push(...array);
+  }
+
+  const listModule = listMatch.map(item => item.replace(`require('`, '').replace(`')`, ''));
 
   return listModule;
 };
