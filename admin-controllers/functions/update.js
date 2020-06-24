@@ -5,6 +5,7 @@ const fs = require('fs');
 const dirTree = require('directory-tree');
 const funcPath = './core/functions';
 const { deployChildProcess } = require('../deploy');
+const http = require('../../libs/http-request');
 
 module.exports = async (ctx) => {
   const dir = dirTree(funcPath);
@@ -15,7 +16,7 @@ module.exports = async (ctx) => {
     history = dirTree(`${funcPath}/history`);
   }
 
-  let { script, name } = ctx.request.body;
+  let { script, name, from } = ctx.request.body;
 
   if (!script || !name) {
     return ctx.showError(ctx, 'Invalid request!');
@@ -42,6 +43,10 @@ module.exports = async (ctx) => {
 
       }
       await fs.writeFileSync(`${funcPath}/${name}.js`, script);
+
+      if (!from) { // send this action no any node
+
+      }
     } else {
       return ctx.showError(ctx, `Not found function ${name}`, 404);
     }
@@ -55,4 +60,6 @@ module.exports = async (ctx) => {
       return ctx.showResult(ctx, 'Update success!', 200);
     }
   }
+
+  return ctx.showError(ctx, 'Can not update service.', 200);
 }

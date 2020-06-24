@@ -5,10 +5,11 @@ const fs = require('fs');
 const dirTree = require('directory-tree');
 const funcPath = './core/functions';
 const { deployChildProcess } = require('../deploy');
+const http = require('../../libs/http-request');
 
 module.exports = async (ctx) => {
   const tree = dirTree(funcPath);
-  let { script, name } = ctx.request.body;
+  let { script, name, from } = ctx.request.body;
 
   if (!name) {
     return ctx.showError(ctx, 'Invalid request!');
@@ -27,6 +28,10 @@ module.exports = async (ctx) => {
   if (process.env.FAST_DEPLOY === 'true') {
     const result = await deployChildProcess();
     return result.success ? ctx.showResult(ctx, result.message, 200) : ctx.showError(ctx, result.message, 400);
+  }
+
+  if (!from) { // send action no any node
+
   }
 
   return ctx.showResult(ctx, 'Created!', 201);

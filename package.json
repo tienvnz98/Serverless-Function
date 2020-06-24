@@ -1,6 +1,6 @@
 {
   "name": "serverless-function",
-  "version": "0.2.2",
+  "version": "0.2.5",
   "description": "Fast to deploy a simple REST API service.",
   "main": "app.js",
   "scripts": {
@@ -29,6 +29,7 @@
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
     "moment": "^2.27.0",
+    "node-docker-api": "^1.1.22",
     "ping": "^0.2.3",
     "websocket": "^1.0.31",
     "ws": "^7.3.0"

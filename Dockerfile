@@ -16,6 +16,8 @@ ENV NODE_ENV production
 ENV ADMIN_PORT 4100
 ENV API_PORT 4200
 
+LABEL serverless_function=true
+
 EXPOSE 4100
 EXPOSE 4200
 
