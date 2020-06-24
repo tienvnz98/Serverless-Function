@@ -2,6 +2,8 @@ const { listAvliveContainer } = require('../libs/docker');
 const httpRequest = require('../libs/http-request');
 const imageName = process.env.IMAGE_NAME || 'tiennm0298/serverless-function';
 const adminPort = process.env.ADMIN_PORT || 4100;
+const { getCurrentIP } = require('../libs/currentIP');
+
 
 const listContainer = async (imageName) => {
   const list = await listAvliveContainer(imageName);
@@ -31,25 +33,29 @@ module.exports.forwardHttp = async (ctx) => {
   const dataPromise = [];
 
   body.from = 'local_request';
+  const localIp = getCurrentIP();
 
   for (const container of list) {
+    // Skip current container ip
     for (const ip of container.networks) {
-      let url = `http://${ip}:${adminPort}${path}`;
+      if (localIp.indexOf(ip) === -1) {
+        let url = `http://${ip}:${adminPort}${path}`;
 
-      if (Object.keys(ctx.query).length) {
-        url = url + '?path=' + ctx.query.path;
-      }
-
-      const prm = httpRequest(url, method, {}, body, true).then(res => {
-        if (res.status === 200) {
-          (`Forward action for ${url} success!`);
-        } else {
-          console.log(`\nForward action for ${url} fail!`);
+        if (Object.keys(ctx.query).length) {
+          url = url + '?path=' + ctx.query.path;
         }
 
-        return res;
-      });
-      dataPromise.push(prm);
+        const prm = httpRequest(url, method, {}, body, true).then(res => {
+          if (res.status === 200) {
+            (`Forward action for ${url} success!`);
+          } else {
+            console.log(`\nForward action for ${url} fail!`);
+          }
+
+          return res;
+        });
+        dataPromise.push(prm);
+      }
     }
   }
 
