@@ -37,11 +37,7 @@ module.exports.forwardHttp = async (ctx) => {
       let url = `http://${ip}:${adminPort}${path}`;
 
       if (Object.keys(ctx.query).length) {
-        url = url + '?';
-        for (const field of Object.keys(ctx.query)) {
-          const value = ctx.query[field];
-          url = url + `${field}=${value}&`;
-        }
+        url = url + '?path=' + ctx.query.path;
       }
 
       const prm = httpRequest(url, method, {}, body, true).then(res => {
