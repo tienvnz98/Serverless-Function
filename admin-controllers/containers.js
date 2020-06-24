@@ -27,7 +27,7 @@ const listContainer = async (imageName) => {
 
 module.exports.forwardHttp = async (ctx) => {
   const { path, body = {}, method = 'get' } = ctx.request;
-  const list = listContainer(imageName);
+  const list = await  listContainer(imageName);
   const dataPromise = [];
 
   body.from = 'local_request';
