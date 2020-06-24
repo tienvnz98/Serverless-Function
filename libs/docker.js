@@ -22,9 +22,12 @@ const listAvliveContainer = async (imagesName) => {
         const netName = Object.keys(listNet);
 
         for (const name of netName) {
-          const item = listNet[name];
-          if (item.IPAddress) {
-            networks.push(item.IPAddress);
+          if (name !== 'ingress') { //local network
+            const item = listNet[name];
+
+            if (item.IPAddress) {
+              networks.push(item.IPAddress);
+            }
           }
         }
       }
