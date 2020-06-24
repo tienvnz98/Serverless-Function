@@ -27,21 +27,30 @@ const listContainer = async (imageName) => {
 
 module.exports.forwardHttp = async (ctx) => {
   const { path, body = {}, method = 'get' } = ctx.request;
-  const list = await  listContainer(imageName);
+  const list = await listContainer(imageName);
   const dataPromise = [];
 
   body.from = 'local_request';
 
   for (const container of list) {
     for (const ip of container.networks) {
-      const url = `http://${ip}:${adminPort}${path}`;
+      let url = `http://${ip}:${adminPort}${path}`;
+
+      if (Object.keys(ctx.query).length) {
+        url = url + '?';
+        for (const field of Object.keys(ctx.query)) {
+          const value = ctx.query[field];
+          url = url + `${field}=${value}&`;
+        }
+      }
+
       const prm = httpRequest(url, method, {}, body, true).then(res => {
         if (res.status === 200) {
           console.log(`Forward action for ${url} success!`);
         } else {
           console.log(`Forward action for ${url} fail!`);
         }
-      
+
         return res;
       });
       dataPromise.push(prm);
