@@ -3,7 +3,7 @@ const httpRequest = require('../libs/http-request');
 const imageName = process.env.IMAGE_NAME || 'tiennm0298/serverless-function';
 const adminPort = process.env.ADMIN_PORT || 4100;
 
-module.exports.listContainer = async (ctx) => {
+const listContainer = async (imageName) => {
   const list = await listAvliveContainer(imageName);
   const dataPromise = [];
 
@@ -22,5 +22,36 @@ module.exports.listContainer = async (ctx) => {
   }
   await Promise.all(dataPromise);
 
+  return list;
+}
+
+module.exports.forwardHttp = async (ctx) => {
+  const { path, body = {}, method = 'get' } = ctx.request;
+  const list = listContainer(imageName);
+  const dataPromise = [];
+
+  body.from = 'local_request';
+
+  for (const container of list) {
+    for (const ip of container.networks) {
+      const url = `http://${ip}:${adminPort}/${path}`;
+      const prm = httpRequest(url, method, {}, body, true).then(res => {
+        if (res.status === 200) {
+          console.log(`Forward action for ${url} success!`);
+        } else {
+          console.log(`Forward action for ${url} fail!`);
+        }
+      
+        return res;
+      });
+      dataPromise.push(prm);
+    }
+  }
+
+  return await Promise.all(dataPromise);
+}
+
+module.exports.listContainer = async (ctx) => {
+  const list = await listContainer(imageName);
   return ctx.showResult(ctx, list, 200);
 }

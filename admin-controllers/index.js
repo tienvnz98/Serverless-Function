@@ -7,7 +7,6 @@ const createFunction = require('./functions/create');
 const updateFunction = require('./functions/update');
 const readFunction = require('./functions/read');
 const deleteFunction = require('./functions/delete');
-const { localIpAdress } = require('./get-current-ip');
 
 const createMiddleware = require('./middlewares/create');
 const updateMiddleware = require('./middlewares/update');

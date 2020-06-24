@@ -2,6 +2,7 @@
 
 const { childProcess } = require('../libs/event-emitor');
 const { killChildProcess } = require('../libs/process-control');
+const { forwardHttp } = require('./containers');
 
 async function deployChildProcess() {
   const wsServer = childProcess.getConnection();
@@ -38,6 +39,10 @@ async function deployChildProcess() {
 module.exports.deployChildProcess = deployChildProcess;
 module.exports.deploy = async (ctx) => {
   const result = await deployChildProcess();
+  if (!ctx.request.body && !ctx.request.body.from) {
+    forwardHttp(ctx);
+  }
+  
   return result.success ?
     ctx.showResult(ctx, result.message, 200) :
     ctx.showError(ctx, result.message, 400);
