@@ -13,8 +13,8 @@
             ],
             "program": "${workspaceFolder}/app.js",
             "env": {
-                "ADMIN_PORT": "4444",
-                "API_PORT": "5555",
+                "ADMIN_PORT": "4100",
+                "API_PORT": "4200",
                 "ENABLE_BASIC_AUTH": "false",
                 "ADMIN_USER": "admin",
                 "FAST_DEPLOY": "true",

@@ -3,12 +3,12 @@
 
 const fs = require('fs');
 const { deployChildProcess } = require('../deploy');
-const http = require('../../libs/http-request');
+const { forwardHttp } = require('../../libs/forward-http');
 
 module.exports = async (ctx) => {
   try {
     const path = './' + ctx.query.path;
-    const from = ctx.query.from;
+    const from = ctx.request.body;
 
     const res = await new Promise((resolve, reject) => {
       fs.unlink(path, function (err) {
@@ -19,14 +19,18 @@ module.exports = async (ctx) => {
         }
       })
     });
+    
+    if (!from) { // send action no any node
+      const path = ctx.request.path;
+      const body = ctx.request.body;
+      const method = ctx.request.method;
+      body.from = 'local_swarm';
 
+      forwardHttp(path, method, body);
+    }
     if (process.env.FAST_DEPLOY === 'true') {
       const result = await deployChildProcess();
       return result.success ? ctx.showResult(ctx, result.message, 200) : ctx.showError(ctx, result.message, 400);
-    }
-
-    if (!from) {  // send this action to any node
-
     }
 
     return ctx.showResult(ctx, res, 200);

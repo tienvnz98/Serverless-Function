@@ -5,7 +5,7 @@ const fs = require('fs');
 const dirTree = require('directory-tree');
 const funcPath = './core/functions';
 const { deployChildProcess } = require('../deploy');
-const http = require('../../libs/http-request');
+const { forwardHttp } = require('../../libs/forward-http');
 
 module.exports = async (ctx) => {
   const dir = dirTree(funcPath);
@@ -43,15 +43,19 @@ module.exports = async (ctx) => {
 
       }
       await fs.writeFileSync(`${funcPath}/${name}.js`, script);
-
-      if (!from) { // send this action no any node
-
-      }
     } else {
       return ctx.showError(ctx, `Not found function ${name}`, 404);
     }
 
+    if (!from) { // send action no any node
+      const path = ctx.request.path;
+      const body = ctx.request.body;
+      const method = ctx.request.method;
+      body.from = 'local_swarm';
 
+      forwardHttp(path, method, body);
+    }
+    
     if (process.env.FAST_DEPLOY === 'true') {
       const result = await deployChildProcess();
       return result.success ? ctx.showResult(ctx, result.message, 200) : ctx.showError(ctx, result.message, 400);

@@ -32,15 +32,7 @@ module.exports.execLiveCommand = (commandList = []) => {
   }
 
   if (command) {
-    const childProcess = exec(command, (error, stdout, stderr) => {
-      if (error) {
-        console.log(`error: ${error.message}`);
-      }
-      if (stderr) {
-        console.log(`stderr: ${stderr}`);
-      }
-      console.log(`stdout: ${stdout}`);
-    });
+    const childProcess = exec(command);
 
     childProcess.stdout.on('data', function (data) {
       if (data) data = data.replace(/\n/g, '');

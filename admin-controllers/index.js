@@ -36,8 +36,9 @@ router.post('/admin/middleware/create', createMiddleware);
 router.post('/admin/middleware/update', updateMiddleware);
 
 router.get('/admin/process/deploy', deploy.deploy);
-router.get('/current-ip', (ctx) => {
-  return ctx.showResult(ctx, localIpAdress, 200);
-})
+
+router.get('/status', (ctx) => {
+  return ctx.showResult(ctx, 'OK', 200);
+});
 
 module.exports = router;
