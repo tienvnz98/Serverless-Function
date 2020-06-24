@@ -4,6 +4,25 @@ const { Docker } = require('node-docker-api');
 const socketPath = process.env.DOCKER_SOCKET_PATH || '/var/run/docker.sock';
 const docker = new Docker({ socketPath: socketPath });
 
+
+const filterAliveIp = async (listIP = []) => {
+  const { getStatus } = require('./forward-http');
+
+  const listAlive = [];
+  const dataPromise = [];
+
+  for (const ip of listIP) {
+    const prm = getStatus(ip).then(res => {
+      if (res) listAlive.push(ip);
+    });
+    dataPromise.push(prm);
+  }
+
+  await Promise.all(dataPromise);
+
+  return listAlive;
+}
+
 const listAvliveContainer = async (imagesName) => {
   const listContainer = [];
   const list = await docker.container.list().catch(err => []);
@@ -33,19 +52,17 @@ const listAvliveContainer = async (imagesName) => {
         imageName: imgName,
         networks: networks
       }
-
       listContainer.push(item);
     }
   }
+  const dataPromise = [];
 
-  const listIP = []; // not duplicate ip adress 
-  listContainer.forEach(item => {
-    for (const ip of item.networks) {
-      if (listIP.indexOf(ip) === -1) {
-        listIP.push(ip);
-      }
-    }
-  });
+  for (const item of listContainer) {
+    item.networks = filterAliveIp(item.networks);
+    dataPromise.push(item.networks);
+  }
+
+  await Promise.all(dataPromise);
 
   return listContainer;
 }

@@ -32,10 +32,10 @@ const httpRequest = async (url, method = 'GET', headers = {}, body = {}, bodyEna
         headers: {},
         body: {
           success: false,
-          error: "Request time out after 10s."
+          error: "Request time out after 3s."
         }
       })
-    }, 10000); // timeout after 10s
+    }, 3000); // timeout after 3s
 
     axios(requestOptions).then(res => {
       if (res) {

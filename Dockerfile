@@ -3,6 +3,7 @@ FROM node:carbon-alpine
 COPY package*.json ./
 
 RUN apk add --update python make alpine-sdk && \
+    apk add curl && \
     npm install && \
     apk del python make alpine-sdk && \
     rm /var/cache/apk/* && \
