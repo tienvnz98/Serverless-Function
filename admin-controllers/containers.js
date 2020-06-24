@@ -34,7 +34,7 @@ module.exports.forwardHttp = async (ctx) => {
 
   for (const container of list) {
     for (const ip of container.networks) {
-      const url = `http://${ip}:${adminPort}/${path}`;
+      const url = `http://${ip}:${adminPort}${path}`;
       const prm = httpRequest(url, method, {}, body, true).then(res => {
         if (res.status === 200) {
           console.log(`Forward action for ${url} success!`);
