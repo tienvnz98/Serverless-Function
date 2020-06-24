@@ -22,7 +22,7 @@ const webSocket = require('./websocket');
 
   app.use(router.routes());
   app.listen(apiPort, () => {
-    console.log(`API runing on port ${apiPort}. Process ID: ${process.pid}`);
+    console.log(`\nAPI runing on port ${apiPort}. Process ID: ${process.pid}`);
   });
 
 })()

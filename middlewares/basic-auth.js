@@ -10,7 +10,7 @@ module.exports = () => {
 
   if (enable) {
     if (!adminUserName || !adminPassword) {
-      console.log('ADMIN_USER or ADMIN_PASS invalid!');
+      console.log('\nADMIN_USER or ADMIN_PASS invalid!');
       process.exit(1);
     }
 

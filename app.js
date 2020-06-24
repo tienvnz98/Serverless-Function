@@ -27,7 +27,7 @@ async function startApp() {
     .use(router.routes());
 
   const server = app.listen(adminPort, () => {
-    console.log(`Admin API runing on port ${adminPort}. Process ID: ${process.pid}`);
+    console.log(`\nAdmin API runing on port ${adminPort}. Process ID: ${process.pid}`);
   });
 
   const wsServer = new WebSocket({

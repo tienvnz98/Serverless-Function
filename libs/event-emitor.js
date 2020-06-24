@@ -21,7 +21,7 @@ class ChildProcess {
 
       connection.on('close', () => {
         wsServer.connections = [];
-        console.log('Child process disconected!');
+        console.log('\nChild process disconected!');
         const { startChildProcess } = require('./process-control');
         startChildProcess();
       })

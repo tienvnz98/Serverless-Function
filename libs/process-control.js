@@ -12,7 +12,7 @@ module.exports.startChildProcess = async function start() {
   const result = await installAnyPackage(list);
 
   if (!result) {
-    console.log(`Install package fail. Child process not runing.`);
+    console.log(`\nInstall package fail. Child process not runing.`);
     return false;
   }
 

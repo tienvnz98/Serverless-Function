@@ -21,7 +21,7 @@ router.put('/api/function_invocations/:functionName', handler);
 router.delete('/api/function_invocations/:functionName', handler);
 
 router.get('/process/kill', () => {
-    console.log(`child process id: ${process.pid} is dead!`);
+    console.log(`\nchild process id: ${process.pid} is dead!`);
     process.exit(0);
 });
 

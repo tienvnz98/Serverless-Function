@@ -46,9 +46,9 @@ module.exports.forwardHttp = async (ctx) => {
 
       const prm = httpRequest(url, method, {}, body, true).then(res => {
         if (res.status === 200) {
-          console.log(`Forward action for ${url} success!`);
+          (`Forward action for ${url} success!`);
         } else {
-          console.log(`Forward action for ${url} fail!`);
+          console.log(`\nForward action for ${url} fail!`);
         }
 
         return res;

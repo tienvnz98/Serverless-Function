@@ -40,10 +40,10 @@ const installPackage = async (pkgName) => {
 
   const res = await new Promise((resolve, reject) => {
     const timeout = setTimeout(() => {
-      console.log('Install package timeout after 30s.');
+      console.log('\nInstall package timeout after 30s.');
       reject('Install package timeout after 30s.');
     }, 30000);
-    console.log(`Process install package ${pkgName}.`);
+    console.log(`\nProcess install package ${pkgName}.`);
 
     exec(`npm install --save ${pkgName}`, (err, stdout, stderr) => {
       clearTimeout(timeout);

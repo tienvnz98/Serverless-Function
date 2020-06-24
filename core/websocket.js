@@ -7,7 +7,7 @@ module.exports = async () => {
   const wsClient = await new Promise((resolve, reject) => {
     const ws = new client();
     const timeout = setTimeout(() => {
-      console.log("Can not connect to manager!");
+      ("Can not connect to manager!");
       resolve(null);
       process.exit(1);
     }, 10000);
@@ -16,7 +16,7 @@ module.exports = async () => {
     ws.connect(wsUrl);
     ws.on('connect', (connection) => {
       clearTimeout(timeout);
-      console.log('Process connected ws on adress ' + wsUrl);
+      console.log('\nProcess connected ws on adress ' + wsUrl);
       resolve(connection);
     });
   });
@@ -28,7 +28,7 @@ module.exports = async () => {
       }
     });
     wsClient.on('close', (data) => {
-      console.log("Disconnect from server!");
+      console.log("\nDisconnect from server!");
     });
     wsClient.sendUTF('connected');
   } else {

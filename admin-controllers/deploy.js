@@ -11,7 +11,7 @@ async function deployChildProcess() {
     const deployTimeOut = process.env.DEPLOY_TIMEOUT || 60;
     const timeout = setTimeout(() => {
       const mgs = `Deploy timeout after ${deployTimeOut} seconds.`;
-      console.log(mgs);
+      console.log('\n' + mgs);
 
       resolve({
         success: false,
@@ -42,7 +42,7 @@ module.exports.deploy = async (ctx) => {
   if (!ctx.request.body && !ctx.request.body.from) {
     forwardHttp(ctx);
   }
-  
+
   return result.success ?
     ctx.showResult(ctx, result.message, 200) :
     ctx.showError(ctx, result.message, 400);
