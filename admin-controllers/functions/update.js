@@ -5,7 +5,6 @@ const fs = require('fs');
 const dirTree = require('directory-tree');
 const funcPath = './core/functions';
 const { deployChildProcess } = require('../deploy');
-const { forwardHttp } = require('../../libs/forward-http');
 
 module.exports = async (ctx) => {
   const dir = dirTree(funcPath);
@@ -53,7 +52,6 @@ module.exports = async (ctx) => {
       const method = ctx.request.method;
       body.from = 'local_swarm';
 
-      forwardHttp(path, method, body);
     }
     
     if (process.env.FAST_DEPLOY === 'true') {

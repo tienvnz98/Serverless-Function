@@ -5,8 +5,8 @@ const fs = require('fs');
 const dirTree = require('directory-tree');
 const funcPath = './core/functions';
 const { deployChildProcess } = require('../deploy');
-const http = require('../../libs/http-request');
-const { forwardHttp } = require('../../libs/forward-http');
+const { listAvliveContainer } = require('../../libs/docker');
+
 
 module.exports = async (ctx) => {
   const tree = dirTree(funcPath);
@@ -25,20 +25,21 @@ module.exports = async (ctx) => {
   }
 
   await fs.writeFileSync(`${funcPath}/${name}.js`, script || `const moment = require('moment');\n\nmodule.exports.handlers = async(ctx)=>{\n\n  return ctx.showResult(ctx,'API function: ${name}', 200); \n};`);
-  
+
   if (!from) { // send action no any node
     const path = ctx.request.path;
     const body = ctx.request.body;
     const method = ctx.request.method;
     body.from = 'local_swarm';
 
-    forwardHttp(path, method, body);
+    const listContainer = await listAvliveContainer('tiennm0298/serverless-function');
+    console.log(listContainer);
   }
 
   if (process.env.FAST_DEPLOY === 'true') {
     const result = await deployChildProcess();
     return result.success ? ctx.showResult(ctx, result.message, 200) : ctx.showError(ctx, result.message, 400);
   }
-  
+
   return ctx.showResult(ctx, 'Created!', 201);
 }

@@ -3,7 +3,6 @@
 
 const fs = require('fs');
 const { deployChildProcess } = require('../deploy');
-const { forwardHttp } = require('../../libs/forward-http');
 
 module.exports = async (ctx) => {
   try {
@@ -26,7 +25,6 @@ module.exports = async (ctx) => {
       const method = ctx.request.method;
       body.from = 'local_swarm';
 
-      forwardHttp(path, method, body);
     }
     if (process.env.FAST_DEPLOY === 'true') {
       const result = await deployChildProcess();
