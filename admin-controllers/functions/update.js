@@ -6,22 +6,26 @@ const dirTree = require('directory-tree');
 const funcPath = './core/functions';
 const { deployChildProcess } = require('../deploy');
 
+
 module.exports = async (ctx) => {
   const dir = dirTree(funcPath);
-  const history = dirTree(`${funcPath}/history`);
+  let history = dirTree(`${funcPath}/history`);
+  
+  if (!history) {
+    fs.mkdirSync(`${funcPath}/history`);
+    history = dirTree(`${funcPath}/history`);
+  }
 
   let { script, name } = ctx.request.body;
 
   if (!script || !name) {
     return ctx.showError(ctx, 'Invalid request!');
   }
-  
-  script = script.replace(/;/g, ';\n');
 
   if (dir && dir.children && history) {
     const functionDir = dir.children.find(item => item.name === `${name}.js`);
     const historyDir = history.children.find(item => item.name === `${name}`);
-
+    
     if (!historyDir) {
       await new Promise((resolve, reject) => {
         fs.mkdir(`${funcPath}/history/${name}`, (err) => {
@@ -34,22 +38,17 @@ module.exports = async (ctx) => {
     if (functionDir) {
       // backup old script
       const oldScript = await fs.readFileSync(`${funcPath}/${name}.js`, 'utf8');
-
       if (oldScript.trim() !== script.trim()) {
         await fs.writeFileSync(`${funcPath}/history/${name}/${new Date().getTime()}.js`, oldScript);
-
       }
 
       await fs.writeFileSync(`${funcPath}/${name}.js`, script);
-
-      return ctx.showResult(ctx, 'Update success!', 200);
+    } else {
+      return ctx.showError(ctx, `Not found function ${name}`, 404);
     }
 
-    if (process.env.FAST_DEPLOY === 'true') {
-      const result = await deployChildProcess();
-      return result.success ? ctx.showResult(ctx, result.message, 200) : ctx.showError(ctx, result.message, 400);
-    }
-    
-    return ctx.showError(ctx, `Not found function ${name}`, 404);
   }
+
+  const result = await deployChildProcess();
+  return result.success ? ctx.showResult(ctx, result.message, 200) : ctx.showError(ctx, result.message, 400);
 }

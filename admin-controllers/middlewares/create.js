@@ -14,8 +14,6 @@ module.exports = async (ctx) => {
     return ctx.showError(ctx, 'Invalid request!');
   }
 
-  script = script.replace(/;/g, ';\n');
-
   if (tree && tree.children) {
     const exist = tree.children.find(item => item.name === `${name}.js`);
 

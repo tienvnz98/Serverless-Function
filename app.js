@@ -14,10 +14,25 @@ const errorHandler = require('./middlewares/error-handler');
 const middleFunction = require('./middlewares/middle-function');
 const basicAuth = require('./middlewares/basic-auth');
 const { childProcess } = require('./libs/event-emitor');
+const shortId = require('shortid');
+const fs = require('fs');
+const path = require('path');
+const funcPath = path.resolve('./core/functions');
+const dirTree = require('directory-tree');
 
-const http = require('./libs/http-request');
 
 async function startApp() {
+  let history = dirTree(`${funcPath}/history`);
+  let fileStorage = dirTree(`${funcPath}/storage`);
+
+  if (!history) {
+    fs.mkdirSync(`${funcPath}/history`);
+  }
+
+  if (!fileStorage) {
+    fs.mkdirSync(`${funcPath}/storage`);
+  }
+
   app
     .use(cors())
     .use(middleFunction())
@@ -27,7 +42,7 @@ async function startApp() {
     .use(router.routes());
 
   const server = app.listen(adminPort, () => {
-    console.log(`Admin API runing on port ${adminPort}. Process ID: ${process.pid}`);
+    console.log(`\nAdmin API runing on port ${adminPort}. Process ID: ${process.pid}`);
   });
 
   const wsServer = new WebSocket({
@@ -36,8 +51,9 @@ async function startApp() {
   });
 
   childProcess.init(wsServer);
-
+  
   startChildProcess();
+  const serviceId = shortId.generate();
 }
 
 startApp();

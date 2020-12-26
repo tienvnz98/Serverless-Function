@@ -13,9 +13,9 @@ module.exports.execCommand = async (commandList = []) => {
   }
 
   if (command) {
-    return await new Promise((resolve, rejects) => {
+    return await new Promise((resolve, reject) => {
       exec(command, (error, stdout, stderr) => {
-        if (error) rejects(error);
+        if (error) reject(error.message);
         resolve(stdout || stderr);
       });
     });

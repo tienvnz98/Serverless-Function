@@ -1,7 +1,5 @@
-'use strict';
-
-
 const axios = require('axios');
+const ping = require('ping');
 
 axios.interceptors.response.use((response) => {
   return response;
@@ -10,9 +8,42 @@ axios.interceptors.response.use((response) => {
     return Promise.reject(error.response);
 });
 
+
+const DNS = {};
 const httpRequest = async (url, method = 'GET', headers = {}, body = {}, bodyEnable = false, responseType) => {
+
+  let timeout = 10000;
+  const match = url.match(/([0-255]\.)/g);
+
+  if (match && match.length === 3) { // if adress is an ip
+    timeout = 30000;
+  }
+
   if (url.indexOf('http') === -1 && url.indexOf('https') === -1) {
     url = 'http://' + url;
+  }
+
+
+  const host = url.split('/')[2] || 'null';
+
+  if (!DNS[host]) {
+    const alive = await new Promise((resolve) => {
+      ping.sys.probe(host, (isAlive) => {
+        resolve(isAlive);
+      });
+    });
+
+    DNS[host] = alive;
+
+    if (!DNS[host]) {
+      return {
+        status: 500,
+        headers: {},
+        body: {
+          message: `Can not ping to host ${host}`
+        }
+      }
+    }
   }
 
   method = method.toLocaleLowerCase();
@@ -32,10 +63,10 @@ const httpRequest = async (url, method = 'GET', headers = {}, body = {}, bodyEna
         headers: {},
         body: {
           success: false,
-          error: "Request time out after 1s."
+          error: `Request time out after ${timeout}s.`
         }
       })
-    }, 1000); // timeout after 1s
+    }, timeout);
 
     axios(requestOptions).then(res => {
       if (res) {

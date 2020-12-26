@@ -1,11 +1,8 @@
 'use strict';
 
 
-const http = require('../libs/http-request');
-
 module.exports = () => {
   return async (ctx, next) => {
-    ctx.http = http;
     ctx.showResult = (ctx, data, status) => {
       ctx.status = status || 200;
       ctx.body = {

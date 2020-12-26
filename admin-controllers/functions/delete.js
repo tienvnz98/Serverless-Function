@@ -4,6 +4,7 @@
 const fs = require('fs');
 const { deployChildProcess } = require('../deploy');
 
+
 module.exports = async (ctx) => {
   try {
     const path = './' + ctx.query.path;
@@ -17,12 +18,8 @@ module.exports = async (ctx) => {
       })
     });
 
-    if (process.env.FAST_DEPLOY === 'true') {
-      const result = await deployChildProcess();
-      return result.success ? ctx.showResult(ctx, result.message, 200) : ctx.showError(ctx, result.message, 400);
-    }
-    
-    return ctx.showResult(ctx, res, 200);
+    const result = await deployChildProcess();
+    return result.success ? ctx.showResult(ctx, result.message, 200) : ctx.showError(ctx, result.message, 400);
   } catch (error) {
     return ctx.showError(ctx, error.message, 400);
   }

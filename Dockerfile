@@ -1,8 +1,11 @@
-FROM node:carbon-alpine
+FROM node:14-alpine
+
+WORKDIR /serverless
 
 COPY package*.json ./
 
 RUN apk add --update python make alpine-sdk && \
+    apk add curl && \
     npm install && \
     apk del python make alpine-sdk && \
     rm /var/cache/apk/* && \
@@ -15,6 +18,8 @@ COPY . .
 ENV NODE_ENV production
 ENV ADMIN_PORT 4100
 ENV API_PORT 4200
+
+LABEL serverless_function=true
 
 EXPOSE 4100
 EXPOSE 4200

@@ -1,0 +1,38 @@
+{
+    "1": {
+        "breaks": [
+            {
+                "total": 1,
+                "lastNextDay": false,
+                "paid": false,
+                "endTimestamp": 1603431000,
+                "startTimestamp": 1603427400
+            },
+            {
+                "total": 0.16666666666666666,
+                "lastNextDay": false,
+                "paid": true,
+                "endTimestamp": 1603420800,
+                "startTimestamp": 1603420200
+            },
+            {
+                "total": 0.16666666666666666,
+                "lastNextDay": false,
+                "paid": true,
+                "endTimestamp": 1603438200,
+                "startTimestamp": 1603437600
+            },
+            {
+                "total": 0.16666666666666666,
+                "lastNextDay": false,
+                "paid": false,
+                "endTimestamp": 1603446000,
+                "startTimestamp": 1603445400
+            }
+        ],
+        "personId": "8411379",
+        "endTimestamp": 1603460400,
+        "startTimestamp": 1603413000,
+        "id": "S8411379_23102020_CaSX10"
+    }
+}

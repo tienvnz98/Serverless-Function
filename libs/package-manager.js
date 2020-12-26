@@ -4,19 +4,25 @@
 const { exec } = require('child_process');
 const dirTree = require('directory-tree');
 const fs = require('fs');
+const path = require('path');
 
 const moduleDetect = (context) => {
   // only npm module
+  const lines = context.split(';');
   const regexp = /(require\(')([a-zA-Z])(.*)('\))/g;
-  let array = context.match(regexp) || [];
-  const listModule = array.map(item => item.replace(`require('`, '').replace(`')`, ''));
+  const listMatch = [];
+
+  for (const line of lines) {
+    let array = line.match(regexp) || [];
+    listMatch.push(...array);
+  }
+
+  const listModule = listMatch.map(item => item.replace(`require('`, '').replace(`')`, ''));
 
   return listModule;
 };
+
 const installPackage = async (pkgName) => {
-
-
-
   const exist = await new Promise((resolve) => {
     try {
       require.resolve(pkgName);
@@ -27,19 +33,44 @@ const installPackage = async (pkgName) => {
   });
 
   if (exist) {
-
     return true;
   }
 
   const res = await new Promise((resolve, reject) => {
     const timeout = setTimeout(() => {
-      console.log('Install package timeout after 30s.');
+      console.log('\nInstall package timeout after 30s.');
       reject('Install package timeout after 30s.');
-    }, 30000);
-    console.log(`Process install package ${pkgName}.`);
+    }, 30000 * 2);
 
-    exec(`npm install --save ${pkgName}`, (err, stdout, stderr) => {
+    console.log(`\nProcess install package ${pkgName}.`);
+
+    exec(`npm install --save ${pkgName}`, async (err, stdout, stderr) => {
       clearTimeout(timeout);
+
+      if (err) {
+        const dir = path.resolve('./core/functions');
+        const tree = dirTree(dir);
+
+        // Remove if install pkg fail
+        if (tree && tree.children) {
+          for (const item of tree.children) {
+            if (item.extension === '.js') {
+              let content = fs.readFileSync(item.path, 'utf8');
+
+              content = content.replace(`require('${pkgName}');`, `{}; // Package ${pkgName} install fail.\n`);
+              content = content.replace(`require('${pkgName}')`, `{}; // Package ${pkgName} install fail.\n`);
+
+              content = content.replace(`require("${pkgName}");`, `{}; // Package ${pkgName} install fail.\n`);
+              content = content.replace(`require("${pkgName}")`, `{}; // Package ${pkgName} install fail.\n`);
+
+              fs.writeFileSync(item.path, content);
+            }
+          }
+        }
+        
+        console.log(err);
+      }
+
       resolve('Child process terminal: ' + (err || stdout || stderr));
     });
   }).catch(err => null);
@@ -55,7 +86,6 @@ const installPackage = async (pkgName) => {
     }
   }
 
-  console.log(`Can't install package ${pkgName}.`);
   return false;
 }
 
@@ -64,12 +94,9 @@ const installAnyPackage = async (modules) => {
   for (const item of modules) {
     dataPromise.push(installPackage(item));
   }
-
   const res = await Promise.all(dataPromise);
 
-  if (res.indexOf(false) !== -1) return false;
-
-  return true;
+  return res;
 };
 
 const scanPackage = async (path) => {

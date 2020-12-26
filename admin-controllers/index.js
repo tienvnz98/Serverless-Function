@@ -14,10 +14,6 @@ const readMiddleware = require('./middlewares/read');
 const deleteMiddleware = require('./middlewares/delete');
 const deploy = require('./deploy');
 
-router.get('/admin/home', async (ctx) => {
-    ctx.body = 'Serverless admin API runing.';
-});
-
 router.get('/admin/function/tree', readFunction.tree);
 router.get('/admin/function/read', readFunction.read);
 router.delete('/admin/function/delete', deleteFunction);
@@ -31,5 +27,13 @@ router.post('/admin/middleware/create', createMiddleware);
 router.post('/admin/middleware/update', updateMiddleware);
 
 router.get('/admin/process/deploy', deploy.deploy);
+router.get('/admin/home', async (ctx) => {
+  return ctx.showResult(ctx, 'Serverless function admin api homepage!', 200);
+});
+
+router.get('/status', (ctx) => {
+  return ctx.showResult(ctx, 'OK', 200);
+});
+
 
 module.exports = router;

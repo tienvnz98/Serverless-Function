@@ -16,8 +16,6 @@ module.exports = async (ctx) => {
     return ctx.showError(ctx, 'Invalid request!');
   }
 
-  script = script.replace(/;/g, ';\n');
-
   if (dir && dir.children && history) {
     const functionDir = dir.children.find(item => item.name === `${name}.js`);
     const historyDir = history.children.find(item => item.name === `${name}`);

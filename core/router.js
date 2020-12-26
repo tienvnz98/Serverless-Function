@@ -2,26 +2,44 @@
 
 
 const Router = require('koa-router');
-const callback = require('./callback');
+const { importData, exportData } = require('./callback');
 const router = new Router();
-const handler = async (ctx) => {
+
+const importHandler = async (ctx) => {
     let functionName = ctx.params.functionName || 'not-found';
-    if (!callback[functionName]) {
+    if (!importData[functionName]) {
         functionName = 'not-found';
     }
-    return callback[functionName](ctx);
-};
+
+    return importData[functionName](ctx);
+}
+
+const exportHandler = async (ctx) => {
+    let functionName = ctx.params.functionName || 'not-found';
+    if (!exportData[functionName]) {
+        functionName = 'not-found';
+    }
+
+    return exportData[functionName](ctx);
+}
 
 router.get('/api/function_invocations/home', async (ctx) => {
-    ctx.body = 'Serverless function homepage!';
+    return ctx.showResult(ctx, 'Serverless function api homepage!', 200);
 });
-router.get('/api/function_invocations/:functionName', handler);
-router.post('/api/function_invocations/:functionName', handler);
-router.put('/api/function_invocations/:functionName', handler);
-router.delete('/api/function_invocations/:functionName', handler);
+
+router.get('/api/function_invocations/import/:functionName', importHandler);
+router.post('/api/function_invocations/import/:functionName', importHandler);
+
+router.get('/api/function_invocations/export/:functionName', exportHandler);
+router.post('/api/function_invocations/export/:functionName', exportHandler);
+
+// old version. Will remove
+router.get('/api/function_invocations/:functionName', exportHandler);
+router.post('/api/function_invocations/:functionName', exportHandler);
+
 
 router.get('/process/kill', () => {
-    console.log(`child process id: ${process.pid} is dead!`);
+    console.log(`\nchild process id: ${process.pid} is dead!`);
     process.exit(0);
 });
 

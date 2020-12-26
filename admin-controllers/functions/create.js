@@ -10,26 +10,19 @@ module.exports = async (ctx) => {
   const tree = dirTree(funcPath);
   let { script, name } = ctx.request.body;
 
-  if (!script || !name) {
-    return ctx.showError(ctx, 'Invalid request!');
+  if (!name) {
+    return ctx.showError(ctx, 'Invalid request!', 400);
   }
-
-  script = script.replace(/;/g, ';\n');
 
   if (tree && tree.children) {
     const exist = tree.children.find(item => item.name === `${name}.js`);
-
     if (exist) {
       return ctx.showError(ctx, `Function ${name} already exist. Please update it.`, 400);
     }
   }
 
-  await fs.writeFileSync(`${funcPath}/${name}.js`, script);
+  await fs.writeFileSync(`${funcPath}/${name}.js`, script || `const moment = require('moment');\n\nmodule.exports.handlers = async(ctx)=>{\n\n  return ctx.showResult(ctx,'API function: ${name}', 200); \n};`);
+  const result = await deployChildProcess().then(res => res.success);
 
-  if (process.env.FAST_DEPLOY === 'true') {
-    const result = await deployChildProcess();
-    return result.success ? ctx.showResult(ctx, result.message, 200) : ctx.showError(ctx, result.message, 400);
-  }
-
-  return ctx.showResult(ctx, 'Created!', 201);
+  return result ? ctx.showResult(ctx, 'Created!', 200) : ctx.showError(ctx, 'Fail', 400);
 }
