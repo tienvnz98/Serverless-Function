@@ -10,10 +10,9 @@
 
 ### Setup backend
 #### image: 
-- container.leanwell.co/deploy/registry-container/serverless-function:1.0.8
 
 ### Traefik path config
-- domain: api.leanwell.co
+- domain: 
 - pathPrefix: /api/function_invocations/
 - public port: Admin port (for UI setting function).
 
@@ -60,7 +59,7 @@
 
 #### Testing
 ```
-Request: curl --location --request GET 'api.leanwell.co/api/function_invocations/home'
+Request: curl --location --request GET /api/function_invocations/home'
 Response: 
 {
     "success": true,
@@ -71,7 +70,7 @@ Response:
 
 ### Setup UI
 #### Setup: 
-- container.leanwell.co/deploy/registry-container/frontend-serverless-functions:1.0.0
+- /deploy/registry-container/frontend-serverless-functions:1.0.0
 - PORT: 8070:8070
 
 #### Test
@@ -99,7 +98,7 @@ module.exports.handlers = async (ctx) => {
 - Testing
 ```
 Request:
-curl --location --request GET 'https://api.leanwell.co/api/function_invocations/hello_world?name=%22Tien%22'
+curl --location --request GET '/api/function_invocations/hello_world?name=%22Tien%22'
 
 Response
 {
