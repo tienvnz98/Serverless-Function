@@ -23,7 +23,7 @@
   "dependencies": {
     "@elastic/elasticsearch": "^7.9.1",
     "@koa/cors": "^3.0.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "base-64": "^0.1.0",
     "consul": "^0.37.0",
     "directory-tree": "^2.2.4",
