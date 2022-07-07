@@ -35,7 +35,7 @@
     "koa-router": "^7.4.0",
     "lodash": "^4.17.20",
     "mime": "^2.4.6",
-    "moment": "^2.27.0",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.31",
     "node-fetch": "^2.6.1",
     "node-rsa": "^1.1.1",
